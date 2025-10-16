@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: redisspring
+
+
+server:
+  port: 9091
+
+
+redis:
+  host: localhost
+  port: 6379
+
+logging:
+  level:
+    com.springfields.redis_with_spring.redisspring: DEBUG

@@ -39,3 +39,6 @@
 - Redis Database.
 - Actuator - App health
 - Portable - Containerize
+  - Container components
+    - Spring Java app
+    - Redis database

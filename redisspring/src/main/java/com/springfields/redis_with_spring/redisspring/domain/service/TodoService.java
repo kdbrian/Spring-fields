@@ -4,12 +4,13 @@ import com.springfields.redis_with_spring.redisspring.domain.model.Todo;
 import com.springfields.redis_with_spring.redisspring.domain.model.Todo.TodoBuilder;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface TodoService {
     List<Todo> allTodo();
-    Todo addTodo(TodoBuilder builder);
+    Map<String,String> todoById(String id);
+    Todo addTodo(Todo builder);
     Todo updateTodo(String id,TodoBuilder builder);
     Boolean deleteTodo(String id);
-    Optional<Todo> todoById(String id);
 }
