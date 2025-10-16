@@ -22,22 +22,25 @@ public class RedisTodoServiceImpl implements TodoService {
 
     @Override
     public List<Todo> allTodo() {
-        Schema schema = new Schema()
-                .addTextField("title", 2.0)
-                .addTextField("content", 3.0);
+//        Schema schema = new Schema()
+//                .addTextField("title", 2.0)
+//                .addTextField("content", 3.0);
 
         //TODO: use indexing to retrieve all documents wit prefix todo# in key
         //now -> retrieve all keys {contains = todo#}
         ScanResult<String> result = jedis.scan(ScanParams.SCAN_POINTER_START, new ScanParams().match("todo#*"));
-        List<Map<String, String>> ret = new ArrayList<>();
-        List<Todo> todos = result.getResult().stream().map(jedis::hgetAll).map(Todo::fromStringMap).toList();
-        return todos;
+        return result.getResult().stream().map(jedis::hgetAll).map(Todo::fromStringMap).toList();
     }
 
     @Override
-    public Map<String, String> todoById(String id) {
+    public Todo todoById(String id) {
         String todoId = String.format("todo#%s", id);
-        return jedis.hgetAll(todoId);
+        Map<String, String> hgetAll = jedis.hgetAll(todoId);
+
+        if (hgetAll.isEmpty())
+            return null;
+
+        return Todo.fromStringMap(hgetAll);
     }
 
     @Override
@@ -51,25 +54,23 @@ public class RedisTodoServiceImpl implements TodoService {
     public Todo updateTodo(String id, Todo.TodoBuilder builder) {
         //retrieve todo
         var tempTodo = todoById(id);
-        if (tempTodo.isEmpty())
-            return null;
 
         //update fields
         Todo built = builder.build();
         //replace existing updateAt=now()
         Todo updated = Todo.builder()
                 .id(id)
-                .title(built.getTitle() != null && !built.getTitle().isEmpty() ? built.getTitle() : tempTodo.get("title"))
-                .description(built.getDescription() != null && !built.getDescription().isEmpty() ? built.getDescription() : tempTodo.get("description"))
+                .title(built.getTitle() != null && !built.getTitle().isEmpty() ? built.getTitle() : tempTodo.getTitle())
+                .description(built.getDescription() != null && !built.getDescription().isEmpty() ? built.getDescription() : tempTodo.getDescription())
                 .updateAt(System.currentTimeMillis())
                 .build();
-        log.info("builder {}", updated);
+
         return addTodo(updated);
     }
 
     @Override
     public Boolean deleteTodo(String id) {
-        if (todoById(id).isEmpty())
+        if (todoById(id) == null)
             return false;
         return jedis.del(String.format("todo#%s", id)) != -1;
     }

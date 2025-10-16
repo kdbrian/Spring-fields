@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface TodoService {
     List<Todo> allTodo();
-    Map<String,String> todoById(String id);
+    Todo todoById(String id);
     Todo addTodo(Todo builder);
     Todo updateTodo(String id,TodoBuilder builder);
     Boolean deleteTodo(String id);
