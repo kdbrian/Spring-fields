@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: dev
+
+  application:
+    name: app
+
+  security:
+    secret:
+
+  data:
+    mongodb:
+      uri:
+      database: spring-auth-app
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: #the email used to generate password
+    password: #generate in google
+    protocol: smtp
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+
+          starttls:
+            enable: true
+
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000

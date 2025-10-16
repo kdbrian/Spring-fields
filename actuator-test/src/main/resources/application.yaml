@@ -1,0 +1,8 @@
+server:
+  port: 8080
+spring:
+  application:
+    name=actuator-test
+management:
+  server:
+    port: 9090

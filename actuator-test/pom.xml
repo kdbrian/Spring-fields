@@ -8,11 +8,11 @@
 		<version>3.5.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.kdbrian.springfields.grpc-demo</groupId>
-	<artifactId>grpc-demo</artifactId>
+	<groupId>com.actuator</groupId>
+	<artifactId>actuator-test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>grpc-demo</name>
-	<description>Grpc demo</description>
+	<name>actuator-test</name>
+	<description>Spring Boot for actuator integration with tests.</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -32,6 +32,10 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
@@ -40,7 +44,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
